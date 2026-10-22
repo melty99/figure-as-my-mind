@@ -1,0 +1,103 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>图随我意：从绘图代码到可视编辑</title><style>body{margin:0;background:#eef4fb;color:#24364e;font:17px/1.85 'Segoe UI','Microsoft YaHei',sans-serif}main{max-width:1120px;margin:36px auto;padding:34px 46px;background:white;border:1px solid #cfdef0;border-radius:16px}h1{font-size:32px;line-height:1.4;color:#123962}h2{margin-top:44px;border-top:1px solid #dbe6f3;padding-top:22px;color:#154e8b;scroll-margin-top:20px}h3{color:#25558a}a{color:#1666b3;text-decoration-thickness:1px}img{max-width:100%;height:auto;border:1px solid #cfdef0;border-radius:9px}code{background:#edf3fa;padding:2px 5px;border-radius:4px;font-size:.9em}pre{background:#132c4b;color:#e7f1ff;padding:20px;border-radius:10px;overflow:auto;line-height:1.65}pre code{background:none;padding:0}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:15px}td,th{border:1px solid #cfdef0;padding:10px 14px;text-align:left}th{background:#e9f2fc}li{margin:6px 0}footer{margin-top:42px;padding-top:16px;border-top:1px solid #dbe6f3;color:#63738a;font-size:14px}@media(max-width:800px){main{margin:0;border-radius:0;padding:22px 18px}body{font-size:16px}h1{font-size:26px}}@media print{body{background:white}main{margin:0;padding:0;border:0;max-width:none}a{color:inherit}pre{white-space:pre-wrap}h2,h3{break-after:avoid}img,tr{break-inside:avoid}}</style><main><h1 id="图随我意从绘图代码到可视编辑">图随我意：从绘图代码到可视编辑</h1>
+<p><strong>简体中文</strong> · <a href="introduction.en.html">English</a></p>
+<p><a href="README.html">README</a> · <a href="skills/figure-as-my-mind/docs/安装与启动.html">安装</a> · <a href="skills/figure-as-my-mind/docs/教程.html">完整教程</a></p>
+<p>科研改图常常需要反复调整坐标框、标题、图例、字号和子图布局。图随我意保留源码与数据，把这些修改放进本地浏览器工作台，并把最终设置带回代码。</p>
+<p>下面七个 GIF 来自实际工作台操作。先完成<a href="README.html#快速开始">快速安装</a>，再使用<a href="examples/quickstart/README.html">合成 CSV 示例</a>尝试；熟悉后，将同样流程用于自己的源码。普通 SVG 与原生语义图的编辑能力不同，见文末说明。</p>
+<h2 id="1-缩放坐标框">1. 缩放坐标框</h2>
+<p><strong>目标：改变绘图区长宽，同时保持数值含义。</strong></p>
+<p><a href="docs/media/01-axes-resize.gif" target="_blank"><img loading="lazy" src="docs/media/01-axes-resize.gif" alt="拉宽、压扁、收窄、拉高坐标框"></a></p>
+<ol>
+<li>左侧选中单图；组图先进入要编辑的子图。</li>
+<li>切换到“坐标框”层，选中绘图区。</li>
+<li>拖动四边或四角手柄；左右改宽，上下改高。也可在右栏输入尺寸。</li>
+<li>查看数据、误差线、刻度与坐标框一起重新映射；只改尺寸，不改观测值。</li>
+</ol>
+<p>GIF 刻意展示较大幅度的变化。组图联动使用<strong>坐标框的实际宽高</strong>，不是把整个图片容器强制成同样大小。固定比例地图、极坐标和 3D 等特殊布局按适用方式调整；不以拉伸地图代替改变投影。</p>
+<p>需要更大编辑区域时，可拖动左右侧栏的内侧边缘。预览缩放只改变屏幕显示，不改变输出尺寸。</p>
+<h2 id="2-选择坐标范围与主刻度">2. 选择坐标范围与主刻度</h2>
+<p><strong>目标：决定观察区间，以及轴上显示哪些数值。</strong></p>
+<p><a href="docs/media/02-axis-range.gif" target="_blank"><img loading="lazy" src="docs/media/02-axis-range.gif" alt="坐标轴范围编辑"></a></p>
+<ol>
+<li>在原生坐标图上右键坐标轴，打开范围编辑侧栏。</li>
+<li>选择 X / Y，输入下限与上限，直接观察预览。</li>
+<li>用<strong>主刻度定位（major tick locator）</strong>设置间隔、数量或自定义位置。</li>
+<li>核对关联组件后应用，需要时撤销。</li>
+</ol>
+<p>范围为 0–10 时：</p>
+<table>
+<tr><th>目标刻度</th><th>设置方式</th></tr>
+<tr><td>0、5、10</td><td>主刻度间隔 5，或自定义位置</td></tr>
+<tr><td>0、2、4、6、8、10</td><td>主刻度间隔 2，或含两端的 6 个主刻度</td></tr>
+<tr><td>不等间距的指定值</td><td>自定义主刻度位置</td></tr>
+</table>
+<p>同一侧栏提供 linear、ln、log₂、log₁₀ 等尺度。对数尺度使用大于 0 的数据与范围，显示尺度不改写原始输入。离散轴可以调整标签样式与角度，不把类别当连续数值重算。</p>
+<h2 id="3-移动与缩放图例">3. 移动与缩放图例</h2>
+<p><strong>目标：图例清楚，同时不遮住数据。</strong></p>
+<p><a href="docs/media/03-legend-edit.gif" target="_blank"><img loading="lazy" src="docs/media/03-legend-edit.gif" alt="图例整体移动和缩放"></a></p>
+<ol>
+<li>切换到“图例与色标”，点击图例整体，拖到合适位置。</li>
+<li>拖外框手柄等比例缩放，符号、文字与边框一起变化。</li>
+<li>双击图例，在固定右栏中调整方向、行列、条目顺序、符号与文字间距。</li>
+<li>修改分类颜色时选择相应系列 / 适用范围，核对数据系列同步更新。</li>
+</ol>
+<p>连续色标的编辑器提供渐变节点、颜色、尺寸与刻度等适用参数。图例内部排版和整张图例的位置可分别修改。只改误差线颜色时进入误差层，保留它与数据主体的位置关联。</p>
+<h2 id="4-精修子图字体与色标">4. 精修子图字体与色标</h2>
+<p><strong>目标：统一共同格式，保留各子图的独立内容。</strong></p>
+<p><a href="docs/media/04-panel-style.gif" target="_blank"><img loading="lazy" src="docs/media/04-panel-style.gif" alt="字号同步与另一子图色标独立编辑"></a></p>
+<ol>
+<li>左侧勾选至少两张单图，创建组图；按提示先编辑子图，再查看完整组图。</li>
+<li>保持“本组联动修改”开启，修改兼容共同格式；GIF 中两张图字号一起更新。</li>
+<li>从子图列表选择另一张，单独调整连续色带、色标刻度字号与尺寸。</li>
+<li>对需要保留独立格式的面板开启“锁定联动”，再统一其余面板。</li>
+</ol>
+<p>双击文字可改字体、字号、粗体、斜体、旋转角度、颜色和对齐等适用参数。固定右栏方便边改边看。刻度标签可作用于整条轴；轴标题与刻度文字分别编辑。</p>
+<p>“移动子图”用于容器移动；编辑轴、点或图例时返回要素编辑状态。联动锁和布局 / 移动锁用途不同，锁定画布不等于锁定格式同步。</p>
+<h2 id="5-同步旋转三维组图">5. 同步旋转三维组图</h2>
+<p><strong>目标：比较两张三维图时，让相机一起变化。</strong></p>
+<p><a href="docs/media/05-spatial-rotation.gif" target="_blank"><img loading="lazy" src="docs/media/05-spatial-rotation.gif" alt="盐度组图实时同步旋转"></a></p>
+<ol>
+<li>先接入明确的原生三维场景；分层地图按“先平面、再 3D”流程确认范围与外观。</li>
+<li>进入<strong>完整组图视图</strong>，打开 3D 编辑侧栏。</li>
+<li>勾选“同步旋转本组未锁定子图”，拖动旋转；滚轮缩放，Shift + 拖动平移。</li>
+<li>确认后应用。需要统一起始视角时用“恢复三维视图”，整次应用可撤销。</li>
+</ol>
+<p>默认只改当前子图，同步需要明确选择。兼容、未锁定的原生三维面板参加同步，各自的字体、颜色、色标、比例、缩放和平移保留。多轴或未知几何不自动猜测关联。</p>
+<p>PNG、截图和平面 SVG 没有可旋转的原生相机；先按源码 / 数据适配。参见 <a href="skills/figure-as-my-mind/references/3d-adapters.html">3D 接入</a>和<a href="examples/spatial-demo/README.html">合成三维例子</a>，无需演示航次的原始数据。</p>
+<h2 id="6-复用设置与绘图语言">6. 复用设置与绘图语言</h2>
+<p><strong>目标：这次调好的样式，用于下一批相同结构的图。</strong></p>
+<p><a href="docs/media/06-reuse-settings.gif" target="_blank"><img loading="lazy" src="docs/media/06-reuse-settings.gif" alt="选择语言并复制设置"></a></p>
+<ol>
+<li>点击画布上方“复制设置给 Codex”。</li>
+<li>选择 R、Python、MATLAB 或 C，复制提示词与 JSON，或下载 JSON。</li>
+<li>回到对话，附上目标脚本与数据，说明复用到哪些变量 / 分组。</li>
+<li>检查轴范围、分组颜色与特殊对象；结构不同的图按语义匹配，不盲套对象 ID。</li>
+</ol>
+<p>例如：</p>
+<pre><code>使用 $figure-as-my-mind，把下面的设置用于这个脚本中我选定的响应变量。
+沿用原统计方法与原始数据，保留分组颜色和误差关联。
+先列出可选变量；对特殊坐标或不兼容对象明确说明。
+生成可编辑图后，返回工作台链接和所选语言的输出代码。</code></pre>
+<p>“多语言矢量复现”准确重放当前外观，<strong>不是统计模型自动互译</strong>。换数据或重算模型时从真实输入与原分析脚本继续。</p>
+<h2 id="7-保存与导出">7. 保存与导出</h2>
+<p><strong>目标：得到可投稿的图片，也能以后继续改。</strong></p>
+<p><a href="docs/media/07-export.gif" target="_blank"><img loading="lazy" src="docs/media/07-export.gif" alt="导出设置与组图结果"></a></p>
+<ol>
+<li>等待“已自动保存”，点击“导出…”。</li>
+<li>选择 SVG / PDF 等矢量格式，或 PNG / TIFF，设置物理尺寸与 DPI。</li>
+<li>默认透明导出，工作台使用白色预览便于观察；需要白底时明确设置。</li>
+<li>选择“图片与绘图代码 / 仅图片 / 仅绘图代码”，以及目标代码语言。</li>
+<li>完整备份时导出项目包；下次用同一项目路径打开，沿用上次设置。</li>
+</ol>
+<p>矢量格式不会让已有位图自动变成矢量。项目、来源快照、设置和复现脚本各有用途；不要只保存编辑器 HTML 或临时浏览器地址。</p>
+<h2 id="从什么图开始">从什么图开始</h2>
+<ul>
+<li><strong>新图</strong>：说明图型、数据、变量与语言；未指定时优先 R，从源码保留语义。</li>
+<li><strong>已有源码</strong>：保留原分析。Python 原生导入；R / ggplot 同时导出 scene 与 SVG。</li>
+<li><strong>仅有 SVG</strong>：先编辑外观，数值坐标 / 统计联动需要补充语义。</li>
+<li><strong>仅有 PNG / JPG</strong>：先参考重绘，再编辑结果；不从像素虚构观测。</li>
+</ul>
+<p>多张复杂组图采用逐张完成：编辑当前组的子图，确认联动后排版，完成本组再进入下一组，也能减少同时渲染。</p>
+<h2 id="完整演示与资料">完整演示与资料</h2>
+<p><a href="docs/media/demo-bgm.mp4">配乐视频</a> · <a href="docs/media/music-credit.txt">配乐署名</a> · <a href="docs/media/README.html">GIF 说明</a></p>
+<p>盐度图演示交互方式。仓库供重跑的 CSV、R/Python 和三维例子使用合成输入，不附带个人原始航次文件。真实数据、投影、模型和统计方法以你的分析为准。</p>
+<p><a href="skills/figure-as-my-mind/docs/教程.html">完整图文教程</a> · <a href="skills/figure-as-my-mind/references/native-coordinates.html">四语言桥接</a> · <a href="skills/figure-as-my-mind/references/project-format.html">项目格式</a> · <a href="LICENSE">MIT</a></p><footer>图随我意 · Figure as My Mind v1.0 · 离线使用指南。截图可点击查看原图。</footer></main></html>
