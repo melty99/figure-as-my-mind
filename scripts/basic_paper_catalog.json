@@ -1,0 +1,216 @@
+{
+  "reviewDate": "2026-10-08",
+  "edition": "paper-v1",
+  "papers": {
+    "nanoparticles": {
+      "title": "Imparting multi-functionality to covalent organic framework nanoparticles by the dual-ligand assistant encapsulation strategy",
+      "journal": "Nature Communications",
+      "year": 2021,
+      "doi": "10.1038/s41467-021-24838-7",
+      "url": "https://www.nature.com/articles/s41467-021-24838-7",
+      "review": "作者原文和图注核对；版式以新绘图代码改绘，示意输入不冒充原始数据。"
+    },
+    "inflammation": {
+      "title": "Interpretable inflammation landscape of circulating immune cells",
+      "journal": "Nature Medicine",
+      "year": 2026,
+      "doi": "10.1038/s41591-025-04126-3",
+      "url": "https://www.nature.com/articles/s41591-025-04126-3",
+      "review": "作者原文和图注核对；版式以新绘图代码改绘，示意输入不冒充原始数据。"
+    },
+    "musyc": {
+      "title": "MuSyC is a consensus framework that unifies multi-drug synergy metrics for combinatorial drug discovery",
+      "journal": "Nature Communications",
+      "year": 2021,
+      "doi": "10.1038/s41467-021-24789-z",
+      "url": "https://www.nature.com/articles/s41467-021-24789-z",
+      "review": "作者原文和图注核对；版式以新绘图代码改绘，示意输入不冒充原始数据。"
+    },
+    "coronavirus-tree": {
+      "title": "A pneumonia outbreak associated with a new coronavirus of probable bat origin",
+      "journal": "Nature",
+      "year": 2020,
+      "doi": "10.1038/s41586-020-2012-7",
+      "url": "https://www.nature.com/articles/s41586-020-2012-7",
+      "review": "作者原文和图注核对；版式以新绘图代码改绘，示意输入不冒充原始数据。"
+    },
+    "groundwater": {
+      "title": "A new conceptual framework for the transformation of groundwater dissolved organic matter",
+      "journal": "Nature Communications",
+      "year": 2022,
+      "doi": "10.1038/s41467-022-29711-9",
+      "url": "https://www.nature.com/articles/s41467-022-29711-9",
+      "review": "作者原文和图注核对；版式以新绘图代码改绘，示意输入不冒充原始数据。"
+    },
+    "immune-dictionary": {
+      "title": "Dictionary of immune responses to cytokines at single-cell resolution",
+      "journal": "Nature",
+      "year": 2024,
+      "doi": "10.1038/s41586-023-06816-9",
+      "url": "https://www.nature.com/articles/s41586-023-06816-9",
+      "review": "作者原文和图注核对；版式以新绘图代码改绘，示意输入不冒充原始数据。"
+    },
+    "stream": {
+      "title": "Single-cell trajectories reconstruction, exploration and mapping of omics data with STREAM",
+      "journal": "Nature Communications",
+      "year": 2019,
+      "doi": "10.1038/s41467-019-09670-4",
+      "url": "https://www.nature.com/articles/s41467-019-09670-4",
+      "review": "作者原文和图注核对；版式以新绘图代码改绘，示意输入不冒充原始数据。"
+    },
+    "pca-reference": {
+      "title": "Proteomic characterization of Omicron SARS-CoV-2 host response",
+      "journal": "Cell Discovery",
+      "year": 2022,
+      "doi": "10.1038/s41421-022-00418-x",
+      "url": "https://www.nature.com/articles/s41421-022-00418-x",
+      "review": "原文 Fig. 1a 图注核对；模板以示意矩阵真实计算得分、解释率与质心。"
+    }
+  },
+  "templates": [
+    {
+      "kind": "bar",
+      "name": "分组柱状图",
+      "description": "柱形分组比较，独立误差线与样本点",
+      "paper": "nanoparticles",
+      "figure": "Fig. 4d",
+      "dataMode": "synthetic-demo",
+      "adaptation": "柱形、重复点与误差的表示方式改绘为两组并列模板。"
+    },
+    {
+      "kind": "pie",
+      "name": "饼图 / 环形图",
+      "description": "构成比例、百分数与分类图例",
+      "paper": "inflammation",
+      "figure": "Fig. 1a（构成饼图）",
+      "dataMode": "synthetic-demo",
+      "adaptation": "保留分区配色、白色分隔与外置图例；默认环形版式。"
+    },
+    {
+      "kind": "line",
+      "name": "折线图",
+      "description": "多序列曲线、观测点与参照线",
+      "paper": "musyc",
+      "figure": "Fig. 1A（单变量响应曲线）",
+      "dataMode": "synthetic-demo",
+      "adaptation": "采用单变量响应曲线的线型与组色；参数与观测为示意值。"
+    },
+    {
+      "kind": "heatmap",
+      "name": "热图",
+      "description": "矩阵色带、行列标签与分组色条",
+      "paper": "shen",
+      "figure": "Fig. 4A",
+      "dataMode": "synthetic-demo",
+      "adaptation": "采用分组色条与以零为中心的热图；无未经计算的聚类树。"
+    },
+    {
+      "kind": "pca",
+      "name": "PCA 图",
+      "description": "主成分得分、解释率与分组点形",
+      "paper": "pca-reference",
+      "figure": "Fig. 1a",
+      "dataMode": "synthetic-demo",
+      "adaptation": "采用分组得分、灰色质心与连接线；新示意矩阵实际计算标准化 PCA、解释率和质心，非原论文得分。"
+    },
+    {
+      "kind": "tree",
+      "name": "系统发育树图",
+      "description": "矩形分枝、末端标签与枝长比例尺",
+      "paper": "coronavirus-tree",
+      "figure": "Fig. 1d",
+      "dataMode": "synthetic-demo",
+      "adaptation": "保留枝长尺度及类群配色；使用明确的示例 Newick，不假造系统发育分析。"
+    },
+    {
+      "kind": "vk",
+      "name": "VK 图",
+      "description": "O/C–H/C 散点与边缘分布",
+      "paper": "groundwater",
+      "figure": "Fig. 1",
+      "dataMode": "synthetic-demo",
+      "adaptation": "主图、边缘分布与分组配色改绘；元素比由示例分子式实际计算。"
+    },
+    {
+      "kind": "scatter",
+      "name": "散点图",
+      "description": "分组散点、拟合线与区间",
+      "paper": "alster",
+      "figure": "Fig. 1–2（温度响应散点与曲线）",
+      "dataMode": "synthetic-demo",
+      "adaptation": "单独截取散点及拟合表达重建；示例 OLS 拟合不冒称论文分析模型。"
+    },
+    {
+      "kind": "box",
+      "name": "箱线图",
+      "description": "箱体、中心线、须线及样本点",
+      "paper": "inspire",
+      "figure": "Fig. 1G–H（分布比较）",
+      "dataMode": "synthetic-demo",
+      "adaptation": "采用原文分布比较布局，样本为新示意值。"
+    },
+    {
+      "kind": "violin",
+      "name": "小提琴图",
+      "description": "分布密度、四分位箱与中心线",
+      "paper": "immune-dictionary",
+      "figure": "Fig. 1c / Extended Data Fig. 1a",
+      "dataMode": "synthetic-demo",
+      "adaptation": "分布主体加内嵌四分位箱；独立保存真实示意样本。"
+    },
+    {
+      "kind": "histogram",
+      "name": "直方图",
+      "description": "共有分箱、计数与分布比较",
+      "paper": "groundwater",
+      "figure": "Fig. 1（边缘密度）",
+      "dataMode": "synthetic-demo",
+      "adaptation": "将边缘分布改为独立直方图变体；明确采用新示意数据和共有分箱，不声称原文分箱。"
+    },
+    {
+      "kind": "bubble",
+      "name": "气泡图",
+      "description": "大小编码比例，颜色编码数值",
+      "paper": "immune-dictionary",
+      "figure": "Extended Data Fig. 1e（点阵图）",
+      "dataMode": "synthetic-demo",
+      "adaptation": "保留矩阵布局及大小、颜色双编码；两套图例分开。"
+    },
+    {
+      "kind": "forest",
+      "name": "森林图",
+      "description": "点估计、非对称区间与参照线",
+      "paper": "recovery",
+      "figure": "Fig. 3",
+      "dataMode": "published-summary",
+      "adaptation": "转录已核对的四个公开汇总效应值及区间，改绘布局。"
+    },
+    {
+      "kind": "surface3d",
+      "name": "三维曲面图",
+      "description": "真实 XYZ 曲面、视角与连续色标",
+      "paper": "musyc",
+      "figure": "Fig. 1B（响应曲面）",
+      "dataMode": "synthetic-demo",
+      "adaptation": "响应曲面表达用明确的独立响应公式改绘；不是 MuSyC 拟合结果。"
+    },
+    {
+      "kind": "scatter3d",
+      "name": "三维散点图",
+      "description": "三维分组点云与空间轨迹",
+      "paper": "stream",
+      "figure": "Fig. 1a（降维与轨迹示意）",
+      "dataMode": "synthetic-demo",
+      "adaptation": "保留三维点云及分枝轨迹表达；生成示意 XYZ，不声称已运行 MLLE 或 STREAM。"
+    },
+    {
+      "kind": "contour",
+      "name": "等值线图",
+      "description": "填色区间、等值线与连续色标",
+      "paper": "immune-dictionary",
+      "figure": "Extended Data Fig. 1c（轮廓密度图）",
+      "dataMode": "synthetic-demo",
+      "adaptation": "用明确的高斯混合场改绘等值轮廓；不是 t-SNE 或原文细胞密度。"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "图随我意 · Figure as My Mind"
+  short_description: "启用时优先生成逐元素可编辑图，支持 R/Python/MATLAB/C"
+  default_prompt: "使用 $figure-as-my-mind 时，绘图默认优先生成工作台可逐元素编辑的图，从源码阶段保留坐标、文字、数据与误差、图例色标和独立子图的语义关联；先适配并验证再交付工作台。新图优先 R 语义接入，保留既有语言与统计分析，支持分层编辑、组图、批绘及 R/Python/MATLAB/C 复现导出。"

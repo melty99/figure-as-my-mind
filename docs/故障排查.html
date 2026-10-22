@@ -1,0 +1,25 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>故障排查</title><style>body{margin:0;background:#eef4fb;color:#24364e;font:17px/1.85 'Segoe UI','Microsoft YaHei',sans-serif}main{max-width:1120px;margin:36px auto;padding:34px 46px;background:white;border:1px solid #cfdef0;border-radius:16px}h1{font-size:32px;line-height:1.4;color:#123962}h2{margin-top:44px;border-top:1px solid #dbe6f3;padding-top:22px;color:#154e8b;scroll-margin-top:20px}h3{color:#25558a}a{color:#1666b3;text-decoration-thickness:1px}img{max-width:100%;height:auto;border:1px solid #cfdef0;border-radius:9px}code{background:#edf3fa;padding:2px 5px;border-radius:4px;font-size:.9em}pre{background:#132c4b;color:#e7f1ff;padding:20px;border-radius:10px;overflow:auto;line-height:1.65}pre code{background:none;padding:0}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:15px}td,th{border:1px solid #cfdef0;padding:10px 14px;text-align:left}th{background:#e9f2fc}li{margin:6px 0}footer{margin-top:42px;padding-top:16px;border-top:1px solid #dbe6f3;color:#63738a;font-size:14px}@media(max-width:800px){main{margin:0;border-radius:0;padding:22px 18px}body{font-size:16px}h1{font-size:26px}}@media print{body{background:white}main{margin:0;padding:0;border:0;max-width:none}a{color:inherit}pre{white-space:pre-wrap}h2,h3{break-after:avoid}img,tr{break-inside:avoid}}</style><main><h1 id="故障排查">故障排查</h1>
+<p><a href="../README.html">README</a> · <a href="教程.html">教程</a></p>
+<table>
+<tr><th>现象</th><th>处理方法</th></tr>
+<tr><td>双击没有打开 / 窗口报错</td><td>解压全部文件。用终端运行 <code>python start.py --check</code> 查看缺少的环境；不要只拷贝 cmd 或 HTML。</td></tr>
+<tr><td>python 找不到</td><td>安装 Python 3.10+ 并在新终端检查 <code>python --version</code>；Windows 可用 <code>py -3 start.py</code>。</td></tr>
+<tr><td>缺模块 / 依赖安装中断</td><td>在解压根目录重新运行 <code>python start.py --setup</code>，保留完整错误输出交给 Codex。</td></tr>
+<tr><td>无法访问此站点</td><td>普通启动后由守护连续检查，掉线会自动打开 CMD 恢复并重新打开工作台；等待十余秒及启动时间。若仍失败，查看项目 recovery.log，或运行 <code>python start.py --no-open</code>。希望重启后也恢复，按安装说明启用 --resume-on-login。</td></tr>
+<tr><td>端口已被占用</td><td>启动器会尽量换空闲端口并给出新地址，不会停止其他应用。已有项目端口正在监听但健康检查失败时，不强行重复启动；把项目路径和 studio.log 交给 Codex。</td></tr>
+<tr><td>新包启动后仍像旧界面</td><td>确认新包路径。旧后台可能仍在运行；交给 Codex 根据项目路径核实进程再重启，不要结束所有 Python 进程。</td></tr>
+<tr><td>只有画布能拖动，内部元素点不到</td><td>点“完成移动”退出子图移动模式。可启用“锁定画布布局”，再选文字 / 图形 / 图例层。</td></tr>
+<tr><td>右侧找不到设置</td><td>先选正确编辑层，再点对象或用设置搜索。不同图型与不同接入方式的专用控件不同。</td></tr>
+<tr><td>R 图是路径字形而不是文字</td><td>用 svglite 重新导出；也可在自由装饰编辑中明确替换为可编辑文字。普通 SVG 不会自动推断统计样本。</td></tr>
+<tr><td>SVG 无拟合 / 真实 3D 控件</td><td>需要接入原生数据和对应适配器。不能从路径和二维投影反推真实观测 / 相机。</td></tr>
+<tr><td>改颜色后部分点没变</td><td>检查“仅当前点 / 同系列 / 本轴 / 当前子图”应用范围、独立覆盖、锁定状态及是否用了连续色带。</td></tr>
+<tr><td>柱子不能上下拖</td><td>柱高对应数值，界面保护数值轴方向。只允许分类方向调间距。需要新数据时明确导入新表并重绘。</td></tr>
+<tr><td>字体不正确 / 中文方框</td><td>在本机安装字体，选已安装字体后重导出；同名英文字体不保证含中文字形。</td></tr>
+<tr><td>PNG / PDF 报浏览器缺失</td><td>按安装说明安装 Playwright Chromium，或使用已安装 Edge / Chrome。</td></tr>
+<tr><td>图片有白底</td><td>预览白色方便观察；导出中勾选透明。查看软件可能用白底显示透明图，可再检查 PNG alpha 或 SVG。</td></tr>
+<tr><td>数据被改写 / 缺失提示</td><td>不要重建哈希来“修复”。恢复原文件，或将更换后的数据作为新输入重新导入；保护会拒绝覆盖原始捕获。</td></tr>
+<tr><td>另一个窗口修改项目</td><td>先保存该窗口可复制的设置，关闭重复编辑窗口，重新载入最新项目；不要直接覆盖版本号。</td></tr>
+<tr><td>大组图首次加载慢</td><td>首次需要布局和绘制；后续缓存更快。先拆分为较小组图；不要为提速删除数据或降低最终导出质量。</td></tr>
+<tr><td>关闭标签后进程仍在</td><td>本地服务按设计继续运行，下一次启动复用。若需停止，先用 --disable-recovery 关闭自动恢复，再向 Codex 提供项目路径，核实该项目服务后停止。</td></tr>
+</table>
+<p>求助时提供：版本号、操作步骤、图型、原生还是 SVG 接入、截图，以及当前项目 <code>studio.log</code> 的相关报错。公开分享前遮去个人路径、原始数据和 <code>.session.json</code> 的会话 token。</p><footer>图随我意 · Figure as My Mind v1.0 · 离线使用指南。截图可点击查看原图。</footer></main></html>

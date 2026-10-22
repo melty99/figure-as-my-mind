@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>R ggplot 的坐标、统计几何和独立分面</title><style>body{margin:0;background:#eef4fb;color:#24364e;font:17px/1.85 'Segoe UI','Microsoft YaHei',sans-serif}main{max-width:1120px;margin:36px auto;padding:34px 46px;background:white;border:1px solid #cfdef0;border-radius:16px}h1{font-size:32px;line-height:1.4;color:#123962}h2{margin-top:44px;border-top:1px solid #dbe6f3;padding-top:22px;color:#154e8b;scroll-margin-top:20px}h3{color:#25558a}a{color:#1666b3;text-decoration-thickness:1px}img{max-width:100%;height:auto;border:1px solid #cfdef0;border-radius:9px}code{background:#edf3fa;padding:2px 5px;border-radius:4px;font-size:.9em}pre{background:#132c4b;color:#e7f1ff;padding:20px;border-radius:10px;overflow:auto;line-height:1.65}pre code{background:none;padding:0}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:15px}td,th{border:1px solid #cfdef0;padding:10px 14px;text-align:left}th{background:#e9f2fc}li{margin:6px 0}footer{margin-top:42px;padding-top:16px;border-top:1px solid #dbe6f3;color:#63738a;font-size:14px}@media(max-width:800px){main{margin:0;border-radius:0;padding:22px 18px}body{font-size:16px}h1{font-size:26px}}@media print{body{background:white}main{margin:0;padding:0;border:0;max-width:none}a{color:inherit}pre{white-space:pre-wrap}h2,h3{break-after:avoid}img,tr{break-inside:avoid}}</style><main><h1 id="r-ggplot-的坐标统计几何和独立分面">R ggplot 的坐标、统计几何和独立分面</h1>
+<p>适用于已有 R/ggplot 源码和真实数据，用户需要缩放坐标框、改范围、编辑箱体/标注或拆分分面的情况。普通 <code>import-svg</code> / 无 scene 的 <code>import-vector</code> 仍只提供通用对象编辑，不能恢复坐标或统计参数。</p>
+<h2 id="接入">接入</h2>
+<p>保留原 R 源码和输入，在受控输出目录执行纯绘图部分；先排查源脚本副作用。不要将执行上传源码作为浏览器导入的隐式步骤。</p>
+<pre><code>source(&quot;&lt;skill&gt;/scripts/bridge.R&quot;, encoding=&quot;UTF-8&quot;)
+# p 是原 R 绘图代码和真实数据生成的 ggplot 对象
+fam_save(p, &quot;plot.svg&quot;, width=10, height=8)
+fam_save_ggplot(p, &quot;plot.scene.json&quot;, width=10, height=8)
+fam_manifest(&quot;draw.R&quot;,
+  figures=list(list(svg=&quot;plot.svg&quot;, scene=&quot;plot.scene.json&quot;, name=&quot;结果图&quot;)),
+  inputs=c(&quot;data.csv&quot;), file=&quot;import.json&quot;)</code></pre>
+<pre><code>python &lt;skill&gt;/scripts/studio.py --project &lt;project&gt; import-vector import.json
+python &lt;skill&gt;/scripts/studio.py --project &lt;project&gt; check-editability --require-axes</code></pre>
+<p>scene 是 <code>ggplot_build</code> 已计算的坐标、统计量、刻度、样式和分面布局。导入器读取 JSON、保留来源快照，用 Python 内核生成可编辑坐标和对象；拖动时不运行 R。原始 SVG 是外观参考；这不是逐像素复刻 R 的所有排版细节。字号/线宽保持物理单位，拆出的单图重新安排留白。原 R 整图标题和 caption 保留在 scene，分面独立图以分面值作标题。</p>
+<p>当前支持普通 Cartesian、未变换的连续或离散轴，point、boxplot、text、segment、hline/vline、line/path、bar/col、errorbar、tile。固定比例坐标、横向统计几何、变换后的原始坐标、极坐标、专门几何或连续色带需要单独适配；遇到未支持几何明确拒绝，不用截图或无坐标 SVG 兜底冒充完成。不要把这里的统计汇总值当成原始样本。</p>
+<h2 id="行身份与箱线样本">行身份与箱线样本</h2>
+<p><code>source_ids</code> 是按图层编号命名的列表，例如 <code>list(&quot;1&quot;=ids)</code>；ID 顺序必须与该层 <code>ggplot_build(p)$data[[1]]</code> 完全对应。特别是 <code>position_jitter</code> 会重排分面；核对 PANEL、分类和数值后才传入，不能直接套用原表顺序。没有显式 ID 的散点保留显示编辑，但不作为拟合样本。重复背景层也不参与拟合。</p>
+<p><code>box_samples=list(&quot;2&quot;=list(&quot;1:1&quot;=values))</code> 按“图层→PANEL:group”传入原始数值。导出器用原 R 四分位数核对 lower/middle/upper；匹配后才开放需要样本的箱线画法。原始箱体/须线沿用 R 统计量。需要重算统计或更换变量时仍回到原 R 分析流程。</p>
+<h2 id="单图再组图">单图再组图</h2>
+<p>每个分面建立一张独立单图。多分面额外建立按原 row/col 排列、引用单图的组图；不是将完整 SVG 当作一个面板。单图右侧“查看组合图”，组图右侧“单独编辑此子图”，保留当前子图定位。修改单图会更新未被面板独立覆盖的组图设置；组图内独立编辑保持局部作用，不反写单图。导入后默认打开单图。</p>
+<p>交付前在真实图上用八向手柄调整坐标框，核对点、箱体、显著性标注和刻度跟随；验证范围、字体、颜色、宽度、保存重开和组图导出。原始源码、数据和 R 计算场景必须通过现有完整性校验。</p><footer>图随我意 · Figure as My Mind v1.0 · 离线使用指南。截图可点击查看原图。</footer></main></html>
