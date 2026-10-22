@@ -1,8 +1,150 @@
-<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>图随我意 v1.0</title><style>body{margin:0;background:#eef4fb;color:#24364e;font:17px/1.85 'Segoe UI','Microsoft YaHei',sans-serif}main{max-width:1120px;margin:36px auto;padding:34px 46px;background:white;border:1px solid #cfdef0;border-radius:16px}h1{font-size:32px;line-height:1.4;color:#123962}h2{margin-top:44px;border-top:1px solid #dbe6f3;padding-top:22px;color:#154e8b;scroll-margin-top:20px}h3{color:#25558a}a{color:#1666b3;text-decoration-thickness:1px}img{max-width:100%;height:auto;border:1px solid #cfdef0;border-radius:9px}code{background:#edf3fa;padding:2px 5px;border-radius:4px;font-size:.9em}pre{background:#132c4b;color:#e7f1ff;padding:20px;border-radius:10px;overflow:auto;line-height:1.65}pre code{background:none;padding:0}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:15px}td,th{border:1px solid #cfdef0;padding:10px 14px;text-align:left}th{background:#e9f2fc}li{margin:6px 0}footer{margin-top:42px;padding-top:16px;border-top:1px solid #dbe6f3;color:#63738a;font-size:14px}@media(max-width:800px){main{margin:0;border-radius:0;padding:22px 18px}body{font-size:16px}h1{font-size:26px}}@media print{body{background:white}main{margin:0;padding:0;border:0;max-width:none}a{color:inherit}pre{white-space:pre-wrap}h2,h3{break-after:avoid}img,tr{break-inside:avoid}}</style><main><h1 id="图随我意-v10">图随我意 v1.0</h1>
-<p><a href="docs/教程.html">完整图文教程</a> · <a href="docs/安装与启动.html">安装与启动</a> · <a href="docs/故障排查.html">故障排查</a></p>
-<p>界面支持中文 / English：顶部点击语言按钮立即切换，浏览器记住选择；图中内容与原始数据不翻译。 本目录是可安装的 Codex skill。调用 <code>$figure-as-my-mind</code> 接入原代码与数据，或启动本地编辑工作台。完整发行包另含根 README、安装器、唯一 Windows 启动入口、R / Python 示例与分发清单。</p>
-<p>安装后的独立依赖可运行 <code>python scripts/setup.py</code>。已有项目用 <code>python scripts/launcher.py --project &quot;项目完整路径&quot;</code> 打开；项目不存在时建议让 Codex 初始化空项目。不要直接双击 assets/editor.html。</p>
-<p>多数模板数据为合成示例。原始数据不回写，图片需先重绘；通用 SVG 不自动获得未声明的统计语义。四语言矢量复现与原生分析重算有不同用途，详见教程。</p>
-<p>需要缩放坐标框或编辑 R 分面图时，使用 <a href="references/ggplot-semantic.html">ggplot 语义接入</a>：保留 R 已计算的坐标和统计量，每个分面先成为独立单图，再建立组图。只有 SVG 的接入不具备这些坐标编辑能力。</p>
-<p>多语言坐标接入：R / Python / MATLAB / C 的明确坐标、误差和 XYZ 可通过<a href="references/native-coordinates.html">统一坐标桥接</a>接入；提供<a href="examples/native-coordinates/README.html">同一数据的四语言示例</a>。已支持 MATLAB Figure 对象提取和标准 C99 坐标头文件；正常交互不重复启动外部语言。</p>
-<p>源码与原创文档采用 <a href="LICENSE">MIT</a>。完整 GitHub 包包含根 introduction 与七个 GIF；独立 skill 保留图文教程、桥接手册和运行脚本。</p><footer>图随我意 · Figure as My Mind v1.0 · 离线使用指南。截图可点击查看原图。</footer></main></html>
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Figure as My Mind · 图随我意</title><style>body{margin:0;background:#eef4fb;color:#24364e;font:17px/1.85 'Segoe UI','Microsoft YaHei',sans-serif}main{max-width:1120px;margin:36px auto;padding:34px 46px;background:white;border:1px solid #cfdef0;border-radius:16px}h1{font-size:32px;line-height:1.4;color:#123962}h2{margin-top:44px;border-top:1px solid #dbe6f3;padding-top:22px;color:#154e8b;scroll-margin-top:20px}h3{color:#25558a}a{color:#1666b3;text-decoration-thickness:1px}img{max-width:100%;height:auto;border:1px solid #cfdef0;border-radius:9px}code{background:#edf3fa;padding:2px 5px;border-radius:4px;font-size:.9em}pre{background:#132c4b;color:#e7f1ff;padding:20px;border-radius:10px;overflow:auto;line-height:1.65}pre code{background:none;padding:0}table{border-collapse:collapse;display:block;overflow:auto;width:100%;font-size:15px}td,th{border:1px solid #cfdef0;padding:10px 14px;text-align:left}th{background:#e9f2fc}li{margin:6px 0}footer{margin-top:42px;padding-top:16px;border-top:1px solid #dbe6f3;color:#63738a;font-size:14px}@media(max-width:800px){main{margin:0;border-radius:0;padding:22px 18px}body{font-size:16px}h1{font-size:26px}}@media print{body{background:white}main{margin:0;padding:0;border:0;max-width:none}a{color:inherit}pre{white-space:pre-wrap}h2,h3{break-after:avoid}img,tr{break-inside:avoid}}</style><main><h1 id="figure-as-my-mind--图随我意">Figure as My Mind · 图随我意</h1>
+<p><a href="#english">English</a> · <a href="#简体中文">简体中文</a></p>
+<h2 id="english">English</h2>
+<p><strong>Connect plotting code with visual editing.</strong></p>
+<p>Figure as My Mind is an installable Codex skill and a local workbench for scientific figures. Keep your R, Python, MATLAB or C source code and data, edit text, axes, legends and layouts in the browser, and export images and settings for reproduction.</p>
+<p><a href="introduction.en.html">English tutorial: seven GIF examples</a> · <a href="introduction.html">Chinese tutorial</a> · <a href="skills/figure-as-my-mind/docs/安装与启动.html">Installation guide (Chinese)</a> · <a href="skills/figure-as-my-mind/docs/教程.html">Detailed manual (Chinese)</a> · <a href="skills/figure-as-my-mind/docs/故障排查.html">Troubleshooting (Chinese)</a> · <a href="LICENSE">MIT license</a></p>
+<p><a href="docs/media/en/01-axes-resize.gif" target="_blank"><img loading="lazy" src="docs/media/en/01-axes-resize.gif" alt="Resize the plotting area independently in width and height"></a></p>
+<h3 id="quick-start">Quick start</h3>
+<p>You need <strong>Python 3.10 or later</strong>. Extract the full repository package and run these commands from the directory containing <code>start.py</code>:</p>
+<pre><code>python start.py --setup
+python install_skill.py
+python start.py</code></pre>
+<p>These commands install dependencies into the tool&#x27;s own runtime, install the skill, and launch the workbench. On Windows, you can subsequently double-click <strong>启动图随我意.cmd</strong>, the single user-facing launcher. On macOS or Linux, use <code>python start.py</code>.</p>
+<p>The workbench starts empty. Click <strong>Templates</strong> in the left panel to explore a chart type, or ask Codex to import your own source code. Use the language button at the top to switch the interface to English. Start with the <a href="introduction.en.html">English illustrated tutorial</a>, which uses English workbench recordings.</p>
+<p>The first dependency installation requires internet access. This package does not include Python, R, MATLAB, system fonts or preinstalled dependencies. Prepare the corresponding runtime or compiler for native R, MATLAB or C plotting. For browser export requirements and the Playwright Chromium fallback when Chrome/Edge is unavailable, see the <a href="skills/figure-as-my-mind/docs/安装与启动.html">installation guide (Chinese)</a>.</p>
+<h4 id="invoke-the-skill-in-codex">Invoke the skill in Codex</h4>
+<p>The installer defaults to <code>~/.agents/skills/figure-as-my-mind</code> and refuses to overwrite an existing directory. Reopen your Codex conversation after installation and send:</p>
+<pre><code>Use $figure-as-my-mind.
+Import the plotting source code and data I provide, keeping the original language and statistical methods.
+Keep the axes frame, text, data marks, error bars, legends and panels editable with their relationships intact.
+Check the required editing capabilities, then return a link to the workbench.</code></pre>
+<p>Provide the source code and data in the same task. Before updating, back up the previous skill outside the skills directory and keep your projects. You can also install the <code>skills/figure-as-my-mind</code> subdirectory from the GitHub repository; no GitHub account or remote URL is assumed by this package.</p>
+<h4 id="full-package-or-lightweight-skill">Full package or lightweight skill?</h4>
+<p>Both contain the same editing engine and all chart templates. The full package also includes the repository launcher, installer, runnable repository examples, bilingual introductions, demonstration GIFs and video. The lightweight ZIP contains the self-contained skill, its documentation, templates and runtime scripts; it does not include the root launcher or demonstration media.</p>
+<p>For a first installation, use the full package and the commands above. For the lightweight version, see its <a href="skills/figure-as-my-mind/README.html#english">English README and quick start</a>. Neither package includes personal research projects or raw cruise data.</p>
+<h3 id="seven-practical-examples">Seven practical examples</h3>
+<p>The <a href="introduction.en.html">English tutorial</a> follows actual workbench operations. Its chapter text, captions and workbench recordings are in English.</p>
+<table>
+<tr><th>Example</th><th>What you can change</th></tr>
+<tr><td>Resize the plotting area</td><td>Widen, flatten, narrow or stretch the axes frame; data marks and error bars follow the coordinate mapping</td></tr>
+<tr><td>Axis limits</td><td>Lower and upper limits, major tick intervals/counts, and linear or logarithmic scales</td></tr>
+<tr><td>Legends</td><td>Move or scale the whole legend; edit entry order, layout and colors</td></tr>
+<tr><td>Panel refinement</td><td>Link common font sizes while editing another panel&#x27;s colorbar independently</td></tr>
+<tr><td>Synchronized rotation</td><td>Rotate compatible native 3D panels together while retaining their individual styles</td></tr>
+<tr><td>Reusable settings</td><td>Choose R, Python, MATLAB or C, then copy settings for Codex</td></tr>
+<tr><td>Export</td><td>SVG, PDF, PNG or TIFF; transparency, dimensions, DPI and reproduction code</td></tr>
+</table>
+<p><a href="docs/media/demo-bgm.mp4">Watch the approximately 54-second video (Chinese demonstration, with music)</a> · <a href="docs/media/music-credit.txt">Music attribution</a> · <a href="docs/media/en/README.html">English GIF collection</a></p>
+<h3 id="start-from-data">Start from data</h3>
+<p>The repository includes synthetic CSV data. The Python example gives you native coordinate editing, data marks and linked error components:</p>
+<pre><code>python skills/figure-as-my-mind/scripts/studio.py --project projects/quickstart import-python examples/quickstart/plot.py
+python start.py --project projects/quickstart</code></pre>
+<p>For R/ggplot, export both the SVG and the computed coordinate scene:</p>
+<pre><code>Rscript examples/quickstart/plot_semantic.R
+python skills/figure-as-my-mind/scripts/studio.py --project projects/quickstart-r import-vector examples/quickstart/import-semantic-r.json
+python start.py --project projects/quickstart-r</code></pre>
+<p>The R example requires <code>ggplot2</code>, <code>jsonlite</code> and <code>svglite</code>. See the <a href="examples/quickstart/README.html">example notes (Chinese)</a> and <a href="examples/spatial-demo/README.html">synthetic 3D composition (Chinese)</a>. Source-code import executes the script; review your plotting script and its side effects before importing it.</p>
+<h3 id="import-routes-and-capabilities">Import routes and capabilities</h3>
+<table>
+<tr><th>Source</th><th>Recommended route</th><th>Capabilities</th></tr>
+<tr><td>Matplotlib</td><td><code>import-python</code></td><td>Native coordinates, series, error components, legends and supported 3D figures</td></tr>
+<tr><td>R/ggplot</td><td>SVG plus a <code>fam_save_ggplot</code> scene, then <code>import-vector</code></td><td>Coordinate and statistical components for supported geometries; independently editable facets</td></tr>
+<tr><td>Other R plots, MATLAB or C</td><td>Explicit coordinate bridge or SVG manifest</td><td>Controls based on the declared coordinates, identities and relationships</td></tr>
+<tr><td>Plain SVG</td><td><code>import-svg</code></td><td>Text, paths and appearance; undeclared statistical relationships are not inferred</td></tr>
+<tr><td>PNG/JPG</td><td>Redraw from the image as a reference, then import the result</td><td>The image is a reference, not a source of original observations</td></tr>
+</table>
+<p>When the skill is enabled, new scientific figures default to R if no language is specified, retaining editable semantics from the source. Existing analyses keep their original language and methods. <strong>Four-language vector reproduction replays the appearance; it does not automatically translate statistical models.</strong></p>
+<h3 id="save-and-reuse">Save and reuse</h3>
+<p>Edits are saved automatically. Reopen the same <code>--project</code> path to continue. Compositions retain independent panel settings; layer locks and linked-edit locks help prevent unwanted changes. The workbench supports ten steps of undo/redo, multiple selection, copy/paste, settings JSON, image export and project packages.</p>
+<p>Original observations and source code are retained. Moving or hiding display elements does not write changes back to the input data; fits and correlations continue to use the original captured observations. Specialized statistical objects and 3D cameras require explicit adaptation.</p>
+<p>The library contains <strong>78 chart types</strong>, including statistical charts, PCA, forest plots, networks, chord diagrams, UpSet plots, machine-learning analysis plots and maps. Examples and templates are for exploration, not new research evidence.</p>
+<h3 id="repository-structure">Repository structure</h3>
+<pre><code>README.md                       English + 简体中文 README
+introduction.md                 Chinese tutorial and GIFs
+introduction.en.md              English tutorial and English GIFs
+docs/media/                     Demonstration GIFs, video and attribution
+skills/figure-as-my-mind/        Installable skill and editing engine
+examples/                       Synthetic CSV, R/Python and 3D examples
+start.py                        Cross-platform launcher
+install_skill.py                Installer that refuses to overwrite
+启动图随我意.cmd                Single Windows launcher
+tools/validate_release.py       Distribution checks
+LICENSE                         MIT license</code></pre>
+<p>Run <code>python tools/validate_release.py</code> to check the distribution. <code>package_plugin.py</code> builds the full ZIP with a file-hash manifest. Personal projects, session tokens, dependency directories, recording projects and development logs are excluded.</p>
+<h3 id="release-and-license">Release and license</h3>
+<p>Current release: <strong>v1.0 / 1.0.0</strong>. Windows is the primary tested platform. Cross-platform command entry points are included; equivalent browser acceptance testing on other operating systems is not claimed.</p>
+<p>Source code and original documentation use the <a href="LICENSE">MIT license</a>. Demonstration music, map data and other assets retain their respective terms in the <a href="THIRD_PARTY_NOTICES.html">third-party notices</a>. No official affiliation with other brands is claimed.</p>
+<p><a href="docs/github-release.html">GitHub release and validation notes (Chinese)</a> · <a href="CHANGELOG.html">Changelog (Chinese)</a></p>
+<h2 id="简体中文">简体中文</h2>
+<p><strong>把“用代码画图”和“在图上修改”连接起来。</strong></p>
+<p>可安装的 Codex skill 与本地科研绘图工作台。保留 R / Python / MATLAB / C 的源码与数据，在浏览器里调整文字、坐标、图例和布局，再导出图片与复现设置。</p>
+<p><a href="introduction.html">七个 GIF 上手示例</a> · <a href="introduction.en.html">English introduction</a> · <a href="skills/figure-as-my-mind/docs/安装与启动.html">安装与启动</a> · <a href="skills/figure-as-my-mind/docs/教程.html">完整教程</a> · <a href="skills/figure-as-my-mind/docs/故障排查.html">排错</a> · <a href="LICENSE">MIT</a></p>
+<p><a href="docs/media/01-axes-resize.gif" target="_blank"><img loading="lazy" src="docs/media/01-axes-resize.gif" alt="坐标框宽高独立调整"></a></p>
+<h3 id="快速开始">快速开始</h3>
+<p>需要 <strong>Python 3.10+</strong>。解压仓库，在包含 <code>start.py</code> 的根目录运行：</p>
+<pre><code>python start.py --setup
+python install_skill.py
+python start.py</code></pre>
+<p>依次完成局部依赖安装、skill 安装和启动。Windows 之后双击唯一的 <strong>启动图随我意.cmd</strong>；macOS / Linux 使用 <code>python start.py</code>。首次工作台为空，可点击左侧“＋ 图型模板”体验，或让 Codex 接入自己的源码。</p>
+<p>首次安装需要联网；本包不携带 Python、R、MATLAB、系统字体和依赖目录。需要原生 R / MATLAB / C 作图时，另准备对应运行环境。没有 Chrome / Edge 时，按<a href="skills/figure-as-my-mind/docs/安装与启动.html">安装说明</a>安装 Playwright Chromium。</p>
+<h4 id="在-codex-中调用">在 Codex 中调用</h4>
+<p>安装器默认放入 <code>~/.agents/skills/figure-as-my-mind</code>，拒绝覆盖已有目录。重新打开会话后发送：</p>
+<pre><code>使用 $figure-as-my-mind。
+请把我提供的绘图源码和数据接入工作台，保留原语言和统计方法。
+坐标框、文字、数据与误差、图例和子图需要保持可编辑的关联。
+先验证所需的编辑能力，再返回可打开的工作台链接。</code></pre>
+<p>将源码与数据附在该次任务中。更新前先把旧 skill 备份到 skills 目录之外，保留自己的项目。也可从 GitHub 仓库的 <code>skills/figure-as-my-mind</code> 子目录安装；本包不预填未知的 GitHub 账户或远端地址。</p>
+<h3 id="七个操作示例">七个操作示例</h3>
+<p><a href="introduction.html">introduction</a> 按实际工作台操作展开：</p>
+<table>
+<tr><th>小节</th><th>修改效果</th></tr>
+<tr><td>坐标框缩放</td><td>拉宽、压扁、收窄、拉高，数据与误差随坐标重新映射</td></tr>
+<tr><td>坐标轴范围</td><td>上下限、主刻度间隔 / 数量、线性与对数尺度</td></tr>
+<tr><td>图例</td><td>整体移动、缩放，条目排序、排版与颜色</td></tr>
+<tr><td>子图精修</td><td>共同字号联动，另一子图色标独立编辑</td></tr>
+<tr><td>同步旋转</td><td>兼容原生 3D 子图一起转，各自样式仍保留</td></tr>
+<tr><td>复用设置</td><td>选择 R / Python / MATLAB / C，复制设置给 Codex</td></tr>
+<tr><td>导出</td><td>SVG / PDF / PNG / TIFF、透明背景、尺寸、DPI 与代码</td></tr>
+</table>
+<p><a href="docs/media/demo-bgm.mp4">观看约 54 秒配乐演示</a> · <a href="docs/media/music-credit.txt">音乐署名</a></p>
+<h3 id="从数据开始">从数据开始</h3>
+<p>附带合成 CSV。Python 路线可直接体验原生坐标、数据与误差组件：</p>
+<pre><code>python skills/figure-as-my-mind/scripts/studio.py --project projects/quickstart import-python examples/quickstart/plot.py
+python start.py --project projects/quickstart</code></pre>
+<p>R / ggplot 推荐同时导出 SVG 和已计算的坐标场景：</p>
+<pre><code>Rscript examples/quickstart/plot_semantic.R
+python skills/figure-as-my-mind/scripts/studio.py --project projects/quickstart-r import-vector examples/quickstart/import-semantic-r.json
+python start.py --project projects/quickstart-r</code></pre>
+<p>R 示例需要 <code>ggplot2</code>、<code>jsonlite</code>、<code>svglite</code>。参见<a href="examples/quickstart/README.html">示例说明</a>和<a href="examples/spatial-demo/README.html">合成三维组图</a>。源码导入会执行脚本，先检查自己的绘图脚本及其副作用。</p>
+<h3 id="接入方式与能力">接入方式与能力</h3>
+<table>
+<tr><th>来源</th><th>推荐入口</th><th>能力</th></tr>
+<tr><td>Matplotlib</td><td><code>import-python</code></td><td>原生坐标、系列、误差、图例和支持的 3D</td></tr>
+<tr><td>R / ggplot</td><td>SVG + <code>fam_save_ggplot</code> 场景，再 <code>import-vector</code></td><td>支持几何的坐标 / 统计组件，独立分面</td></tr>
+<tr><td>R 其他画法 / MATLAB / C</td><td>显式坐标桥接或 SVG 清单</td><td>按声明的坐标、身份与关联开放控件</td></tr>
+<tr><td>普通 SVG</td><td><code>import-svg</code></td><td>文本、路径与外观；不虚构未声明统计关系</td></tr>
+<tr><td>PNG / JPG</td><td>先参考重绘，再接入结果</td><td>图片是参考，不能直接拆成真实观测</td></tr>
+</table>
+<p>启用 skill 后，新科研图未指定语言时优先 R，从源码阶段保留可编辑语义。已有分析沿用原语言和方法。<strong>四语言矢量复现准确重放画面，不代表统计模型自动互译。</strong></p>
+<h3 id="保存与复用">保存与复用</h3>
+<p>修改自动保存，再次用同一 <code>--project</code> 可继续编辑。组图保留面板独立设置；图层锁和联动锁避免误改。支持 10 步撤销 / 重做、多选和复制粘贴、设置 JSON、图片与项目包导出。</p>
+<p>原始观测与源码保留，展示移动 / 隐藏不回写数据；拟合与相关仍使用原始捕获观测。特殊统计对象和三维相机需要明确适配。</p>
+<p>内置 <strong>78 种图型</strong>，包括统计图、PCA、森林图、网络图、弦图、UpSet、机器学习分析图和地图等。示例与模板供体验，不是新的研究证据。</p>
+<h3 id="仓库结构">仓库结构</h3>
+<pre><code>README.md                       English + 简体中文 README
+introduction.md                 中文操作示例与 GIF
+introduction.en.md              English tutorial with English GIFs
+docs/media/                     GIF、演示视频与配乐署名
+skills/figure-as-my-mind/        可安装 skill 与运行内核
+examples/                       合成 CSV、R/Python 和三维示例
+start.py                        跨平台启动入口
+install_skill.py                无覆盖安装器
+启动图随我意.cmd                唯一 Windows 启动按钮
+tools/validate_release.py       发布前检查
+LICENSE                         MIT</code></pre>
+<p>运行 <code>python tools/validate_release.py</code> 验证发布内容；<code>package_plugin.py</code> 生成带哈希清单的完整 ZIP。不附带个人项目、会话 token、依赖目录、录屏工程和开发日志。</p>
+<h3 id="发布信息">发布信息</h3>
+<p>当前 <strong>v1.0 / 1.0.0</strong>。Windows 是主要实测平台；其他系统保留跨平台命令入口，尚未宣称经过同等浏览器验收。</p>
+<p>源码与原创文档采用 <a href="LICENSE">MIT</a>。演示配乐、底图与其他素材按<a href="THIRD_PARTY_NOTICES.html">第三方说明</a>各自授权。本项目不声明任何其他品牌的官方关联。</p>
+<p><a href="docs/github-release.html">GitHub 发布与验证</a> · <a href="CHANGELOG.html">版本说明</a></p><footer>Figure as My Mind v1.0 · Offline guide. Click an image to view the original.</footer></main></html>
